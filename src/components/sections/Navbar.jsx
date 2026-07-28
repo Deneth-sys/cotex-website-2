@@ -20,17 +20,17 @@ export default function Navbar() {
   const isManualScroll = useRef(false);
   const lockTimeout = useRef(null);
 
-  // Instant active tab switcher with lock
+  // Active tab switcher with lock synced to the 500ms smooth scroll
   const handleNavClick = (itemName) => {
     setActive(itemName);
     isManualScroll.current = true;
 
     if (lockTimeout.current) clearTimeout(lockTimeout.current);
 
-    // Lock scroll detection during the 2.2s page scroll animation
+    // Lock scroll detection during the 500ms smooth scroll animation (+50ms buffer)
     lockTimeout.current = setTimeout(() => {
       isManualScroll.current = false;
-    }, 2300);
+    }, 550);
   };
 
   // Track active section on natural user scroll

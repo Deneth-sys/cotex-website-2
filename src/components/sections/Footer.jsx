@@ -74,7 +74,7 @@ export default function Footer() {
   // Track active section on scroll for footer links
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 250;
+      const scrollPosition = window.scrollY + window.innerHeight * 0.35;
 
       for (let i = navLinks.length - 1; i >= 0; i--) {
         const sectionId = navLinks[i].href.substring(1);
@@ -86,11 +86,11 @@ export default function Footer() {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Universal smooth scroll handler for all footer links & buttons
+  // Snappy 500ms smooth scroll handler for footer links & back-to-top button
   const handleSmoothScroll = (e, href) => {
     e.preventDefault();
     
@@ -98,7 +98,7 @@ export default function Footer() {
     const targetElement = document.getElementById(targetId);
 
     const startPosition = window.pageYOffset || document.documentElement.scrollTop;
-    const navbarOffset = 90;
+    const navbarOffset = 80;
 
     const targetPosition = (targetElement && targetId !== 'hero')
       ? targetElement.getBoundingClientRect().top + startPosition - navbarOffset
@@ -106,15 +106,14 @@ export default function Footer() {
 
     const distance = targetPosition - startPosition;
     const startTime = performance.now();
-    const duration = 2200;
+    const duration = 500; // Fast & visible 500ms glide
 
     const animation = (currentTime) => {
       const elapsedTime = currentTime - startTime;
       const progress = Math.min(elapsedTime / duration, 1);
 
-      const ease = progress < 0.5 
-        ? 2 * progress * progress 
-        : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+      // Ease-Out Cubic curve
+      const ease = 1 - Math.pow(1 - progress, 3);
 
       window.scrollTo(0, startPosition + distance * ease);
 
