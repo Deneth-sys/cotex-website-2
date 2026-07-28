@@ -75,13 +75,13 @@ export default function Navbar() {
       <header className="fixed top-6 inset-x-0 z-50 w-[92%] max-w-4xl mx-auto pointer-events-none">
         <div className="flex items-center justify-between px-6 py-3 rounded-full bg-[#0a0a12]/85 backdrop-blur-xl border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.6)] pointer-events-auto">
           
-          {/* Logo */}
+          {/* Logo with Emblem Font & Gradient Glow */}
           <a 
             href="#hero" 
             onClick={() => handleNavClick('Home')}
-            className="text-xl font-bold tracking-wider text-white z-50"
+            className="font-logo logo-text-glow text-base sm:text-lg font-black uppercase tracking-[0.18em] pl-[0.18em] z-50 hover:opacity-90 transition-opacity"
           >
-            C<span className="text-[#00ccff]">o</span>tex
+            COTEX
           </a>
 
           {/* Animated Active Pill Nav (Desktop) */}

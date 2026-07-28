@@ -15,12 +15,12 @@ export default function Hero() {
         Premium Digital Agency
       </p>
 
-      {/* Brand Title with DecryptedText */}
-      <h1 className="text-5xl sm:text-7xl md:text-9xl font-extrabold tracking-tight text-white mb-4">
-        <DecryptedText text="COTEX" speed={30} />
+      {/* Brand Title formatted with Logo Typography & Metallic Cyan Glow */}
+      <h1 className="font-logo logo-text-glow text-4xl sm:text-7xl md:text-8xl lg:text-9xl font-extrabold mb-4 tracking-[0.18em] pl-[0.18em]">
+        <DecryptedText text="COTEX" speed={30} className="font-logo" />
       </h1>
 
-      {/* FIX: High-Contrast Visible Subtitle with ShinyText */}
+      {/* Subtitle with ShinyText */}
       <h2 className="text-base sm:text-xl md:text-2xl font-semibold text-gray-100 mb-4 px-2 max-w-2xl leading-snug">
         <ShinyText 
           text="Premium IT Solutions & Digital Services" 
