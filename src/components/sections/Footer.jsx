@@ -47,23 +47,35 @@ export default function Footer() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToTop = (e) => {
+  // Universal smooth scroll handler for all footer links & buttons
+  const handleSmoothScroll = (e, href) => {
     e.preventDefault();
     
+    const targetId = href.substring(1); // remove '#'
+    const targetElement = document.getElementById(targetId);
+
     const startPosition = window.pageYOffset || document.documentElement.scrollTop;
+    const navbarOffset = 90; // Height offset for fixed floating header
+
+    // Target top position (or top of page if targetElement is #hero or null)
+    const targetPosition = (targetElement && targetId !== 'hero')
+      ? targetElement.getBoundingClientRect().top + startPosition - navbarOffset
+      : 0;
+
+    const distance = targetPosition - startPosition;
     const startTime = performance.now();
-    const duration = 2200; // Duration in milliseconds (2.2 seconds for a smooth, visible glide through sections)
+    const duration = 2200; // Smooth, luxurious 2.2 second duration
 
     const animation = (currentTime) => {
       const elapsedTime = currentTime - startTime;
       const progress = Math.min(elapsedTime / duration, 1);
-      
-      // Smooth easing function (easeInOutQuad) for a graceful start and finish
+
+      // Smooth easeInOutQuad curve
       const ease = progress < 0.5 
         ? 2 * progress * progress 
         : 1 - Math.pow(-2 * progress + 2, 2) / 2;
 
-      window.scrollTo(0, startPosition * (1 - ease));
+      window.scrollTo(0, startPosition + distance * ease);
 
       if (progress < 1) {
         requestAnimationFrame(animation);
@@ -85,7 +97,11 @@ export default function Footer() {
           
           {/* Brand & Socials */}
           <div className="lg:col-span-4 space-y-6">
-            <a href="#hero" className="text-2xl font-bold tracking-wider text-white font-heading inline-block">
+            <a 
+              href="#hero" 
+              onClick={(e) => handleSmoothScroll(e, '#hero')}
+              className="text-2xl font-bold tracking-wider text-white font-heading inline-block"
+            >
               C<span className="text-[#00ccff]">o</span>tex
             </a>
             
@@ -187,6 +203,7 @@ export default function Footer() {
                   <li key={link.name}>
                     <a 
                       href={link.href} 
+                      onClick={(e) => handleSmoothScroll(e, link.href)}
                       className={`transition-colors ${isActive ? 'text-[#00ccff]' : 'text-gray-400 hover:text-[#00ccff]'}`}
                     >
                       {link.name}
@@ -205,7 +222,11 @@ export default function Footer() {
             <ul className="space-y-3 text-xs">
               {serviceLinks.map((service) => (
                 <li key={service.name}>
-                  <a href={service.href} className="text-gray-400 hover:text-[#00ccff] transition-colors">
+                  <a 
+                    href={service.href} 
+                    onClick={(e) => handleSmoothScroll(e, service.href)}
+                    className="text-gray-400 hover:text-[#00ccff] transition-colors"
+                  >
                     {service.name}
                   </a>
                 </li>
@@ -232,7 +253,7 @@ export default function Footer() {
 
           <Magnet magnetism={0.3}>
             <button
-              onClick={scrollToTop}
+              onClick={(e) => handleSmoothScroll(e, '#hero')}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-gray-300 hover:text-white hover:border-[#00ccff]/50 transition-all cursor-pointer"
             >
               Back to top <ArrowUp size={14} className="text-[#00ccff]" />

@@ -5,6 +5,11 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Global offset for all sections so they don't hide under the fixed navbar */
+section {
+  scroll-margin-top: 6rem;
+}
+
 :root {
   --bg-deep: #050508;
   --bg-card: rgba(18, 18, 30, 0.55);

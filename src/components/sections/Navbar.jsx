@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import Magnet from '../reactbits/Magnet';
@@ -15,11 +15,31 @@ const navItems = [
 export default function Navbar() {
   const [active, setActive] = useState('Home');
   const [isOpen, setIsOpen] = useState(false);
+  
+  // Ref to prevent the scroll listener from pulling active state back mid-glide
+  const isManualScroll = useRef(false);
+  const lockTimeout = useRef(null);
 
-  // Track active section on scroll
+  // Instant active tab switcher with lock
+  const handleNavClick = (itemName) => {
+    setActive(itemName);
+    isManualScroll.current = true;
+
+    if (lockTimeout.current) clearTimeout(lockTimeout.current);
+
+    // Lock scroll detection during the 2.2s page scroll animation
+    lockTimeout.current = setTimeout(() => {
+      isManualScroll.current = false;
+    }, 2300);
+  };
+
+  // Track active section on natural user scroll
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 250; // Offset for navbar position
+      // Skip updates while a programmatic click-scroll is animating
+      if (isManualScroll.current) return;
+
+      const scrollPosition = window.scrollY + window.innerHeight * 0.35;
 
       for (let i = navItems.length - 1; i >= 0; i--) {
         const section = document.getElementById(navItems[i].id);
@@ -30,8 +50,11 @@ export default function Navbar() {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (lockTimeout.current) clearTimeout(lockTimeout.current);
+    };
   }, []);
 
   // Prevent body background scrolling when the mobile drawer is open
@@ -53,7 +76,11 @@ export default function Navbar() {
         <div className="flex items-center justify-between px-6 py-3 rounded-full bg-[#0a0a12]/85 backdrop-blur-xl border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.6)] pointer-events-auto">
           
           {/* Logo */}
-          <a href="#hero" className="text-xl font-bold tracking-wider text-white z-50">
+          <a 
+            href="#hero" 
+            onClick={() => handleNavClick('Home')}
+            className="text-xl font-bold tracking-wider text-white z-50"
+          >
             C<span className="text-[#00ccff]">o</span>tex
           </a>
 
@@ -65,14 +92,14 @@ export default function Navbar() {
                 <a
                   key={item.name}
                   href={item.href}
-                  onClick={() => setActive(item.name)}
+                  onClick={() => handleNavClick(item.name)}
                   className="relative px-3.5 py-1.5 text-xs font-medium text-gray-300 hover:text-white transition-colors"
                 >
                   {isActive && (
                     <motion.div
                       layoutId="activePill"
                       className="absolute inset-0 bg-[#00ccff]/20 border border-[#00ccff]/40 rounded-full"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      transition={{ type: "spring", stiffness: 500, damping: 35, mass: 0.5 }}
                     />
                   )}
                   <span className="relative z-10">{item.name}</span>
@@ -87,6 +114,7 @@ export default function Navbar() {
               <Magnet magnetism={0.4}>
                 <a
                   href="#contact"
+                  onClick={() => handleNavClick('Contact')}
                   className="px-4 py-2 text-xs font-semibold rounded-full bg-[#00ccff] text-[#050508] block"
                 >
                   Start Project
@@ -120,7 +148,7 @@ export default function Navbar() {
                 key={item.name}
                 href={item.href}
                 onClick={() => {
-                  setActive(item.name);
+                  handleNavClick(item.name);
                   setIsOpen(false);
                 }}
                 className={`text-2xl font-bold transition-colors ${
@@ -134,7 +162,10 @@ export default function Navbar() {
           <div className="pt-4 w-full">
             <a
               href="#contact"
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                handleNavClick('Contact');
+                setIsOpen(false);
+              }}
               className="w-full py-3.5 rounded-full bg-[#00ccff] text-[#050508] font-bold text-xs shadow-[0_0_20px_rgba(0,204,255,0.4)] block text-center"
             >
               Start Project
