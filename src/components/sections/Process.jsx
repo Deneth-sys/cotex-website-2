@@ -41,32 +41,42 @@ export default function Process() {
         </h2>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
         {steps.map((item, idx) => {
           const IconComponent = item.icon;
           return (
             <SpotlightCard 
               key={idx} 
               spotlightColor="rgba(0, 204, 255, 0.15)"
-              className="liquid-glass liquid-glass-hover rounded-[2rem] p-8 h-full flex flex-col justify-between border border-white/10 bg-black/30 backdrop-blur-md relative overflow-hidden group border-none bg-transparent"
+              className="bg-transparent border-0 p-0 shadow-none h-full"
             >
-              <div className="flex justify-between items-center mb-6">
-                {/* Liquid Glass Icon Puck */}
-                <div className="liquid-glass-icon w-12 h-12 rounded-2xl flex items-center justify-center text-[#00ccff] group-hover:scale-110 transition-transform duration-300">
-                  <IconComponent size={22} />
-                </div>
-                {/* Step Counter Pill */}
-                <span className="liquid-glass px-3 py-1 rounded-full text-xs font-mono font-bold text-[#00ccff]/70 border border-white/10">
-                  {item.step}
-                </span>
-              </div>
+              {/* Identical Liquid Glass Card Shell as Services.jsx */}
+              <div className="liquid-glass liquid-glass-hover rounded-[2rem] p-6 sm:p-8 relative overflow-hidden group flex flex-col justify-between h-full">
+                {/* Top Specular Edge Highlight */}
+                <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent group-hover:via-[#00ccff] transition-colors duration-500" />
 
-              <h3 className="text-xl font-bold text-white font-heading mb-2 group-hover:text-[#00ccff] transition-colors">
-                {item.title}
-              </h3>
-              <p className="text-gray-400 text-sm leading-relaxed">
-                {item.desc}
-              </p>
+                <div className="space-y-6">
+                  <div className="flex justify-between items-center">
+                    {/* Liquid Glass Icon Puck */}
+                    <div className="liquid-glass-icon w-12 h-12 rounded-2xl flex items-center justify-center text-[#00ccff] group-hover:scale-110 transition-transform duration-300">
+                      <IconComponent size={22} />
+                    </div>
+                    {/* Step Counter Pill */}
+                    <span className="liquid-glass px-3 py-1 rounded-full text-xs font-mono font-bold text-[#00ccff]/70 border border-white/10">
+                      {item.step}
+                    </span>
+                  </div>
+
+                  <div className="space-y-2">
+                    <h3 className="text-lg font-bold text-white font-heading group-hover:text-[#00ccff] transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">
+                      {item.desc}
+                    </p>
+                  </div>
+                </div>
+              </div>
             </SpotlightCard>
           );
         })}

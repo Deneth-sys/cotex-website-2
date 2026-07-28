@@ -38,27 +38,30 @@ export default function Reviews() {
         </h2>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
         {reviews.map((rev, idx) => (
           <TiltedCard 
             key={idx}
             containerClassName="w-full h-full bg-transparent border-0 p-0 shadow-none"
             className="w-full h-full bg-transparent border-0 p-0 shadow-none"
           >
-            {/* Single Clean Glass Card */}
-            <div className="liquid-glass liquid-glass-hover rounded-[2rem] p-8 h-full flex flex-col justify-between border border-white/10 bg-black/30 backdrop-blur-md relative overflow-hidden group">
+            {/* Identical Liquid Glass Card Shell as Services.jsx */}
+            <div className="liquid-glass liquid-glass-hover rounded-[2rem] p-6 sm:p-8 relative overflow-hidden group flex flex-col justify-between h-full">
+              {/* Top Specular Edge Highlight */}
+              <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent group-hover:via-[#00ccff] transition-colors duration-500" />
+
               <div>
                 <div className="flex items-center gap-1 text-amber-400 mb-4">
                   {[...Array(rev.stars)].map((_, i) => (
                     <Star key={i} size={15} fill="currentColor" />
                   ))}
                 </div>
-                <p className="text-gray-300 text-sm leading-relaxed mb-6 italic">
+                <p className="text-gray-300 text-xs sm:text-sm leading-relaxed mb-6 italic">
                   "{rev.text}"
                 </p>
               </div>
 
-              <div className="border-t border-white/10 pt-4 flex justify-between items-center">
+              <div className="border-t border-white/10 pt-4 flex justify-between items-center mt-auto">
                 <div>
                   <h4 className="font-bold text-white text-sm font-heading">{rev.name}</h4>
                   <p className="text-xs text-gray-500">{rev.role}</p>
