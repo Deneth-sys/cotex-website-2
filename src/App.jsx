@@ -60,11 +60,31 @@ export default function App() {
   }, []);
 
   return (
-    <div className="relative bg-[#030306] text-white min-h-screen selection:bg-[#00ccff] selection:text-[#030306]">
-      {/* Liquid Mesh & Film Grain Background */}
+    <div className="relative bg-[#030306] text-white min-h-screen selection:bg-[#00ccff] selection:text-[#030306] overflow-x-hidden">
+      
+      {/* 1. Base Canvas / Particle Background Layer */}
       <Background />
 
-      {/* Main UI Sections */}
+      {/* 2. Vibrant Aurora Glow Layer (Sits above base canvas, below content) */}
+      <div className="fixed inset-0 pointer-events-none z-[2]">
+        {/* Top Left Cyan Glow */}
+        <div 
+          className="absolute -top-[10%] -left-[10%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] rounded-full bg-[#00ccff]/25 blur-[100px] sm:blur-[130px] animate-pulse" 
+          style={{ animationDuration: '5s' }} 
+        />
+        {/* Mid-Right Electric Purple Glow */}
+        <div 
+          className="absolute top-[35%] -right-[15%] w-[50vw] h-[50vw] max-w-[700px] max-h-[700px] rounded-full bg-[#8b5cf6]/25 blur-[100px] sm:blur-[130px] animate-pulse" 
+          style={{ animationDuration: '8s', animationDelay: '1s' }} 
+        />
+        {/* Lower Left Deep Blue Glow */}
+        <div 
+          className="absolute top-[70%] -left-[10%] w-[55vw] h-[55vw] max-w-[800px] max-h-[800px] rounded-full bg-[#0055ff]/20 blur-[100px] sm:blur-[130px] animate-pulse" 
+          style={{ animationDuration: '6s', animationDelay: '2s' }} 
+        />
+      </div>
+
+      {/* 3. Main Interactive UI Layer */}
       <div className="relative z-10">
         <Navbar />
         <Hero />
