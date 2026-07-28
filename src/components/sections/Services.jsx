@@ -40,7 +40,7 @@ const rotatingCapabilities = [
 
 export default function Services() {
   return (
-    <section id="services" className="relative py-32 px-6 overflow-hidden">
+    <section id="services" className="relative py-16 sm:py-32 px-4 sm:px-6 overflow-hidden">
       
       {/* Background Glow Accent */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[#00ccff]/5 rounded-full blur-[150px] pointer-events-none" />
@@ -48,19 +48,19 @@ export default function Services() {
       <div className="max-w-7xl mx-auto relative z-10">
         
         {/* Section Header with Rotating Text */}
-        <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">
-          <span className="text-xs font-semibold uppercase tracking-widest text-[#00ccff]">
+        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-20 space-y-3 sm:space-y-4">
+          <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-[#00ccff]">
             What We Do
           </span>
           
-          <h2 className="text-3xl sm:text-5xl font-bold text-white font-heading tracking-tight leading-tight">
-            Engineered Excellence in <br className="hidden sm:inline" />
-            <span className="text-[#00ccff] drop-shadow-[0_0_20px_rgba(0,204,255,0.4)]">
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white font-heading tracking-tight leading-snug sm:leading-tight px-2">
+            Engineered Excellence in{' '}
+            <span className="text-[#00ccff] drop-shadow-[0_0_20px_rgba(0,204,255,0.4)] inline-flex flex-wrap justify-center align-middle my-1 sm:my-0">
               <RotatingText words={rotatingCapabilities} interval={3000} />
             </span>
           </h2>
           
-          <p className="text-xs sm:text-sm text-gray-400 max-w-xl mx-auto">
+          <p className="text-xs sm:text-sm text-gray-400 max-w-xl mx-auto leading-relaxed px-2">
             Rigorous technical execution meets high-end digital architecture to deliver solutions designed for performance and growth.
           </p>
         </div>
@@ -70,7 +70,7 @@ export default function Services() {
           {serviceList.map((service, index) => (
             <div 
               key={index}
-              className="p-8 rounded-3xl bg-white/[0.02] border border-white/10 hover:border-[#00ccff]/40 transition-all duration-300 group hover:bg-white/[0.04] backdrop-blur-xl flex flex-col justify-between h-full"
+              className="p-6 sm:p-8 rounded-3xl bg-white/[0.02] border border-white/10 hover:border-[#00ccff]/40 transition-all duration-300 group hover:bg-white/[0.04] backdrop-blur-xl flex flex-col justify-between h-full"
             >
               <div className="space-y-6">
                 <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:scale-110 group-hover:border-[#00ccff]/50 transition-all duration-300">
@@ -100,7 +100,7 @@ export default function Services() {
           ))}
 
           {/* Extra Callout Card with Fully Formatted Action Button */}
-          <div className="p-8 rounded-3xl bg-gradient-to-br from-[#00ccff]/10 via-transparent to-white/[0.02] border border-[#00ccff]/30 backdrop-blur-xl flex flex-col justify-between h-full">
+          <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-[#00ccff]/10 via-transparent to-white/[0.02] border border-[#00ccff]/30 backdrop-blur-xl flex flex-col justify-between h-full">
             <div className="space-y-6">
               <div className="w-12 h-12 rounded-2xl bg-[#00ccff]/20 border border-[#00ccff]/40 flex items-center justify-center text-[#00ccff]">
                 <ShieldCheck size={24} />
