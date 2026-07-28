@@ -45,8 +45,8 @@ export default function Reviews() {
             containerClassName="w-full h-full bg-transparent border-0 p-0 shadow-none"
             className="w-full h-full bg-transparent border-0 p-0 shadow-none"
           >
-            {/* Identical Liquid Glass Card Shell as Services.jsx */}
-            <div className="liquid-glass liquid-glass-hover rounded-[2rem] p-6 sm:p-8 relative overflow-hidden group flex flex-col justify-between h-full">
+            {/* Transparent Liquid Glass Card (Matches Services.jsx) */}
+            <div className="liquid-glass liquid-glass-hover rounded-[2rem] p-6 sm:p-8 relative overflow-hidden group flex flex-col justify-between h-full bg-transparent">
               {/* Top Specular Edge Highlight */}
               <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent group-hover:via-[#00ccff] transition-colors duration-500" />
 
