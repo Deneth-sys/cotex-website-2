@@ -30,25 +30,43 @@ const steps = [
 
 export default function Process() {
   return (
-    <section id="process" className="py-24 px-6 max-w-7xl mx-auto">
-      <div className="text-center mb-16">
-        <p className="text-xs uppercase tracking-widest text-[#00ccff]">Methodology</p>
-        <h2 className="text-3xl sm:text-5xl font-bold text-white mt-2">A Structured Workflow</h2>
+    <section id="process" className="pt-36 pb-24 px-6 max-w-7xl mx-auto scroll-mt-20">
+      {/* Header Badge & Title */}
+      <div className="text-center mb-16 space-y-3">
+        <span className="liquid-glass rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[#00ccff] inline-block">
+          Methodology
+        </span>
+        <h2 className="text-3xl sm:text-5xl font-bold text-white font-heading tracking-tight">
+          A Structured Workflow
+        </h2>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {steps.map((item, idx) => {
           const IconComponent = item.icon;
           return (
-            <SpotlightCard key={idx} spotlightColor="rgba(0, 204, 255, 0.15)">
+            <SpotlightCard 
+              key={idx} 
+              spotlightColor="rgba(0, 204, 255, 0.15)"
+              className="liquid-glass liquid-glass-hover rounded-[2rem] p-8 h-full flex flex-col justify-between border border-white/10 bg-black/30 backdrop-blur-md relative overflow-hidden group border-none bg-transparent"
+            >
               <div className="flex justify-between items-center mb-6">
-                <div className="w-12 h-12 rounded-xl bg-[#00ccff]/10 border border-[#00ccff]/30 flex items-center justify-center text-[#00ccff]">
+                {/* Liquid Glass Icon Puck */}
+                <div className="liquid-glass-icon w-12 h-12 rounded-2xl flex items-center justify-center text-[#00ccff] group-hover:scale-110 transition-transform duration-300">
                   <IconComponent size={22} />
                 </div>
-                <span className="text-2xl font-bold font-mono text-white/20">{item.step}</span>
+                {/* Step Counter Pill */}
+                <span className="liquid-glass px-3 py-1 rounded-full text-xs font-mono font-bold text-[#00ccff]/70 border border-white/10">
+                  {item.step}
+                </span>
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
-              <p className="text-gray-400 text-sm leading-relaxed">{item.desc}</p>
+
+              <h3 className="text-xl font-bold text-white font-heading mb-2 group-hover:text-[#00ccff] transition-colors">
+                {item.title}
+              </h3>
+              <p className="text-gray-400 text-sm leading-relaxed">
+                {item.desc}
+              </p>
             </SpotlightCard>
           );
         })}

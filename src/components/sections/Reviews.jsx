@@ -27,31 +27,46 @@ const reviews = [
 
 export default function Reviews() {
   return (
-    <section id="reviews" className="py-24 px-6 max-w-7xl mx-auto">
-      <div className="text-center mb-16">
-        <p className="text-xs uppercase tracking-widest text-[#00ccff]">Client Feedback</p>
-        <h2 className="text-3xl sm:text-5xl font-bold text-white mt-2">Testimonials</h2>
+    <section id="reviews" className="pt-36 pb-24 px-6 max-w-7xl mx-auto scroll-mt-20">
+      {/* Header Badge & Title */}
+      <div className="text-center mb-16 space-y-3">
+        <span className="liquid-glass rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[#00ccff] inline-block">
+          Client Feedback
+        </span>
+        <h2 className="text-3xl sm:text-5xl font-bold text-white font-heading tracking-tight">
+          Testimonials
+        </h2>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {reviews.map((rev, idx) => (
-          <TiltedCard key={idx}>
-            <div className="flex items-center gap-1 text-amber-400 mb-4">
-              {[...Array(rev.stars)].map((_, i) => (
-                <Star key={i} size={15} fill="currentColor" />
-              ))}
-            </div>
-            <p className="text-gray-300 text-sm leading-relaxed mb-6 italic">
-              "{rev.text}"
-            </p>
-            <div className="border-t border-white/10 pt-4 flex justify-between items-center">
+          <TiltedCard 
+            key={idx}
+            containerClassName="w-full h-full bg-transparent border-0 p-0 shadow-none"
+            className="w-full h-full bg-transparent border-0 p-0 shadow-none"
+          >
+            {/* Single Clean Glass Card */}
+            <div className="liquid-glass liquid-glass-hover rounded-[2rem] p-8 h-full flex flex-col justify-between border border-white/10 bg-black/30 backdrop-blur-md relative overflow-hidden group">
               <div>
-                <h4 className="font-bold text-white text-sm">{rev.name}</h4>
-                <p className="text-xs text-gray-500">{rev.role}</p>
+                <div className="flex items-center gap-1 text-amber-400 mb-4">
+                  {[...Array(rev.stars)].map((_, i) => (
+                    <Star key={i} size={15} fill="currentColor" />
+                  ))}
+                </div>
+                <p className="text-gray-300 text-sm leading-relaxed mb-6 italic">
+                  "{rev.text}"
+                </p>
               </div>
-              <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full bg-[#00ccff]/10 text-[#00ccff] border border-[#00ccff]/20">
-                {rev.service}
-              </span>
+
+              <div className="border-t border-white/10 pt-4 flex justify-between items-center">
+                <div>
+                  <h4 className="font-bold text-white text-sm font-heading">{rev.name}</h4>
+                  <p className="text-xs text-gray-500">{rev.role}</p>
+                </div>
+                <span className="liquid-glass-icon text-[10px] font-semibold px-3 py-1 rounded-full text-[#00ccff]">
+                  {rev.service}
+                </span>
+              </div>
             </div>
           </TiltedCard>
         ))}

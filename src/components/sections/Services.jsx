@@ -1,30 +1,29 @@
 import RotatingText from '../reactbits/RotatingText';
-import Magnet from '../reactbits/Magnet';
 import { Code, FileText, Cpu, Layout, PenTool, ArrowRight, ShieldCheck } from 'lucide-react';
 
 const serviceList = [
   {
-    icon: <Code size={24} className="text-[#00ccff]" />,
+    icon: <Code size={22} className="text-[#00ccff]" />,
     title: "Web Development",
     description: "Blazing fast, responsive websites and web apps built with modern stacks."
   },
   {
-    icon: <Layout size={24} className="text-[#00ccff]" />,
+    icon: <Layout size={22} className="text-[#00ccff]" />,
     title: "UI & UX Design",
     description: "Intuitive, visually stunning interfaces designed for optimal engagement."
   },
   {
-    icon: <Cpu size={24} className="text-[#00ccff]" />,
+    icon: <Cpu size={22} className="text-[#00ccff]" />,
     title: "Custom Softwares",
     description: "Tailor-made software solutions engineered to scale business workflows."
   },
   {
-    icon: <FileText size={24} className="text-[#00ccff]" />,
+    icon: <FileText size={22} className="text-[#00ccff]" />,
     title: "CV Designing",
     description: "ATS-optimized, modern resumes that get you noticed and hired."
   },
   {
-    icon: <PenTool size={24} className="text-[#00ccff]" />,
+    icon: <PenTool size={22} className="text-[#00ccff]" />,
     title: "Assignment Writing",
     description: "Top-tier academic research and professional technical writing services."
   }
@@ -42,14 +41,14 @@ export default function Services() {
   return (
     <section id="services" className="relative py-16 sm:py-32 px-4 sm:px-6 overflow-hidden">
       
-      {/* Background Glow Accent */}
+      {/* Background Ambient Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[#00ccff]/5 rounded-full blur-[150px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         
-        {/* Section Header with Rotating Text */}
+        {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-20 space-y-3 sm:space-y-4">
-          <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-[#00ccff]">
+          <span className="liquid-glass rounded-full px-4 py-1.5 text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-[#00ccff] inline-block">
             What We Do
           </span>
           
@@ -65,15 +64,19 @@ export default function Services() {
           </p>
         </div>
 
-        {/* Services Grid with Uniform Height and Aligned Footers */}
+        {/* Services Grid (Liquid Glass Cards) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
           {serviceList.map((service, index) => (
             <div 
               key={index}
-              className="p-6 sm:p-8 rounded-3xl bg-white/[0.02] border border-white/10 hover:border-[#00ccff]/40 transition-all duration-300 group hover:bg-white/[0.04] backdrop-blur-xl flex flex-col justify-between h-full"
+              className="liquid-glass liquid-glass-hover rounded-[2rem] p-6 sm:p-8 relative overflow-hidden group flex flex-col justify-between h-full"
             >
+              {/* Top Specular Edge Highlight */}
+              <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent group-hover:via-[#00ccff] transition-colors duration-500" />
+
               <div className="space-y-6">
-                <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:scale-110 group-hover:border-[#00ccff]/50 transition-all duration-300">
+                {/* Liquid Glass Icon Puck */}
+                <div className="liquid-glass-icon w-12 h-12 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   {service.icon}
                 </div>
 
@@ -99,11 +102,14 @@ export default function Services() {
             </div>
           ))}
 
-          {/* Extra Callout Card with Fully Formatted Action Button */}
-          <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-[#00ccff]/10 via-transparent to-white/[0.02] border border-[#00ccff]/30 backdrop-blur-xl flex flex-col justify-between h-full">
+          {/* Callout Card (Featured Liquid Glass Slate) */}
+          <div className="liquid-glass liquid-glass-hover rounded-[2rem] p-6 sm:p-8 relative overflow-hidden group flex flex-col justify-between h-full border-[#00ccff]/30">
+            {/* Top Accent Specular Highlight */}
+            <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-[#00ccff]/60 to-transparent" />
+
             <div className="space-y-6">
-              <div className="w-12 h-12 rounded-2xl bg-[#00ccff]/20 border border-[#00ccff]/40 flex items-center justify-center text-[#00ccff]">
-                <ShieldCheck size={24} />
+              <div className="liquid-glass-icon w-12 h-12 rounded-2xl flex items-center justify-center text-[#00ccff] bg-[#00ccff]/10">
+                <ShieldCheck size={22} />
               </div>
 
               <div className="space-y-2">

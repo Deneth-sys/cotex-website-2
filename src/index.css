@@ -29,6 +29,64 @@ h1, h2, h3, h4, .font-heading {
   letter-spacing: -0.02em;
 }
 
+/* -------------------------------------------------------------------------- */
+/* LIQUID GLASS UTILITY CLASSES                                               */
+/* -------------------------------------------------------------------------- */
+@layer utilities {
+  /* Base Liquid Glass Slate */
+  .liquid-glass {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.05) 0%,
+      rgba(255, 255, 255, 0.01) 50%,
+      rgba(0, 0, 0, 0.45) 100%
+    );
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 
+      inset 1px 1px 1px 0 rgba(255, 255, 255, 0.35),
+      inset -1px -1px 2px 0 rgba(0, 0, 0, 0.8),
+      0 20px 40px -15px rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* Interactive Liquid Glass with Cyan Light Catch on Hover */
+  .liquid-glass-hover {
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .liquid-glass-hover:hover {
+    background: linear-gradient(
+      135deg,
+      rgba(0, 204, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0.02) 50%,
+      rgba(0, 0, 0, 0.55) 100%
+    );
+    box-shadow: 
+      inset 1px 1px 2px 0 rgba(0, 204, 255, 0.6),
+      inset -1px -1px 2px 0 rgba(0, 0, 0, 0.9),
+      0 25px 50px -10px rgba(0, 204, 255, 0.18);
+    border-color: rgba(0, 204, 255, 0.35);
+    transform: translateY(-4px);
+  }
+
+  /* Compact Liquid Glass Puck (For Icons / Badges) */
+  .liquid-glass-icon {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0.02) 60%,
+      rgba(0, 0, 0, 0.4) 100%
+    );
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 
+      inset 1px 1px 1px 0 rgba(255, 255, 255, 0.45),
+      inset -1px -1px 2px 0 rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+}
+
 /* React Bits Custom Keyframe Animations */
 @keyframes shinyTextSweep {
   0% { background-position: 100% 0; }
