@@ -117,9 +117,14 @@ export default function Contact() {
                 <div>
                   <h4 className="text-white font-bold text-sm font-heading">Direct Phone / WhatsApp</h4>
                   <p className="text-xs text-gray-400 mt-0.5">Quick inquiries & calls</p>
-                  <a href="tel:+94700000000" className="text-[#25D366] text-xs font-semibold hover:underline mt-2 inline-block">
-                    +94 (7X) XXX-XXXX
-                  </a>
+                  <div className="flex flex-col gap-1 mt-2">
+                    <a href="tel:+94770106371" className="text-[#25D366] text-xs font-semibold hover:underline">
+                      +94 77 010 6371
+                    </a>
+                    <a href="tel:+94755655353" className="text-[#25D366] text-xs font-semibold hover:underline">
+                      +94 75 565 5353
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -234,7 +239,7 @@ export default function Contact() {
                           required
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          placeholder="e.g. +94 77 123 4567"
+                          placeholder="e.g. +94 77 010 6371"
                           className="w-full px-4 py-3 rounded-2xl bg-black/40 border border-white/10 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-[#00ccff] shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] focus:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6),0_0_15px_rgba(0,204,255,0.2)] transition-all"
                         />
                       </div>
