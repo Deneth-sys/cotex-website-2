@@ -27,7 +27,7 @@ const serviceLinks = [
 const socialLinks = [
   {
     name: "Email",
-    href: "mailto:cotexfounders@gmail.com",
+    href: "mailto:cotexfounder@gmail.com",
     icon: <Mail size={16} />,
   },
   {

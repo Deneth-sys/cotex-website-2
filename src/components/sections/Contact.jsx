@@ -17,15 +17,43 @@ export default function Contact() {
   const [status, setStatus] = useState('idle'); // 'idle' | 'loading' | 'success'
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name || !formData.email) return;
-    
+
     setStatus('loading');
 
-    setTimeout(() => {
-      setStatus('success');
-    }, 1500);
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify({
+          access_key: import.meta.env.VITE_WEB3FORMS_KEY,
+          name: formData.name,
+          email: formData.email,
+          service: selectedService,
+          message: formData.message,
+          subject: `New Lead: ${selectedService} - ${formData.name}`
+        })
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setStatus('success');
+      } else {
+        console.error("Form submission failed:", result);
+        setStatus('idle');
+        alert("Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+      setStatus('idle');
+      alert("Network error. Please check your connection and try again.");
+    }
   };
 
   const handleReset = () => {
@@ -63,8 +91,8 @@ export default function Contact() {
                 <div>
                   <h4 className="text-white font-bold text-sm font-heading">Direct Correspondence</h4>
                   <p className="text-xs text-gray-400 mt-0.5">Official communication channel</p>
-                  <a href="mailto:cotexdigital@gmail.com" className="text-[#00ccff] text-xs font-semibold hover:underline mt-2 inline-block">
-                    cotexdigital@gmail.com
+                  <a href="mailto:cotexfounder@gmail.com" className="text-[#00ccff] text-xs font-semibold hover:underline mt-2 inline-block">
+                    cotexfounder@gmail.com
                   </a>
                 </div>
               </div>
