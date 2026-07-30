@@ -3,21 +3,21 @@ import { Star } from 'lucide-react';
 
 const reviews = [
   {
-    name: "Alex M.",
+    name: "Kasun P.",
     role: "Technology Consultant",
     service: "CV Architecture",
     text: "Cotex reconstructed my executive resume with exceptional precision. The refined formatting and keyword optimization significantly improved response rates from executive recruiters.",
     stars: 5,
   },
   {
-    name: "Samantha R.",
+    name: "Dilini R.",
     role: "Managing Director",
     service: "Web Engineering",
     text: "The web application developed by Cotex exceeded our expectations. Deliverables were completed on schedule, and the interactive UI elements significantly improved platform engagement.",
     stars: 5,
   },
   {
-    name: "Devin K.",
+    name: "Nuwan K.",
     role: "Academic Researcher",
     service: "Technical Writing",
     text: "The research assistance provided was thorough, rigorous, and fully compliant with all specified academic criteria. Communication was exemplary throughout the process.",
