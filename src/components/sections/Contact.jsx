@@ -2,7 +2,7 @@ import { useState } from 'react';
 import StarBorder from '../reactbits/StarBorder';
 import ClickSpark from '../reactbits/ClickSpark';
 import Magnet from '../reactbits/Magnet';
-import { Send, Mail, Clock, CheckCircle, ShieldCheck, Loader2 } from 'lucide-react';
+import { Send, Mail, Clock, CheckCircle, ShieldCheck, Loader2, Phone } from 'lucide-react';
 
 const serviceOptions = [
   "Web Development",
@@ -15,11 +15,16 @@ const serviceOptions = [
 export default function Contact() {
   const [selectedService, setSelectedService] = useState("Web Development");
   const [status, setStatus] = useState('idle'); // 'idle' | 'loading' | 'success'
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.email) return;
+    if (!formData.name || !formData.email || !formData.phone) return;
 
     setStatus('loading');
 
@@ -34,6 +39,7 @@ export default function Contact() {
           access_key: import.meta.env.VITE_WEB3FORMS_KEY,
           name: formData.name,
           email: formData.email,
+          phone: formData.phone,
           service: selectedService,
           message: formData.message,
           subject: `New Lead: ${selectedService} - ${formData.name}`
@@ -58,7 +64,12 @@ export default function Contact() {
 
   const handleReset = () => {
     setStatus('idle');
-    setFormData({ name: '', email: '', message: '' });
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      message: ''
+    });
   };
 
   return (
@@ -93,6 +104,21 @@ export default function Contact() {
                   <p className="text-xs text-gray-400 mt-0.5">Official communication channel</p>
                   <a href="mailto:cotexfounder@gmail.com" className="text-[#00ccff] text-xs font-semibold hover:underline mt-2 inline-block">
                     cotexfounder@gmail.com
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div className="liquid-glass liquid-glass-hover p-6 rounded-[2rem] relative overflow-hidden group">
+              <div className="flex items-start gap-4">
+                <div className="liquid-glass-icon w-10 h-10 rounded-xl flex items-center justify-center text-[#25D366] shrink-0">
+                  <Phone size={20} />
+                </div>
+                <div>
+                  <h4 className="text-white font-bold text-sm font-heading">Direct Phone / WhatsApp</h4>
+                  <p className="text-xs text-gray-400 mt-0.5">Quick inquiries & calls</p>
+                  <a href="tel:+94700000000" className="text-[#25D366] text-xs font-semibold hover:underline mt-2 inline-block">
+                    +94 (7X) XXX-XXXX
                   </a>
                 </div>
               </div>
@@ -172,10 +198,11 @@ export default function Contact() {
                       </div>
                     </div>
 
-                    {/* Inset Liquid Glass Form Inputs */}
+                    {/* Form Input Fields Grid */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {/* Full Name */}
                       <div>
-                        <label className="block text-xs font-semibold uppercase text-gray-400 mb-2">Full Name</label>
+                        <label className="block text-xs font-semibold uppercase text-gray-400 mb-2">Full Name *</label>
                         <input
                           type="text"
                           required
@@ -185,8 +212,10 @@ export default function Contact() {
                           className="w-full px-4 py-3 rounded-2xl bg-black/40 border border-white/10 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-[#00ccff] shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] focus:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6),0_0_15px_rgba(0,204,255,0.2)] transition-all"
                         />
                       </div>
+
+                      {/* Email Address */}
                       <div>
-                        <label className="block text-xs font-semibold uppercase text-gray-400 mb-2">Email Address</label>
+                        <label className="block text-xs font-semibold uppercase text-gray-400 mb-2">Email Address *</label>
                         <input
                           type="email"
                           required
@@ -196,9 +225,22 @@ export default function Contact() {
                           className="w-full px-4 py-3 rounded-2xl bg-black/40 border border-white/10 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-[#00ccff] shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] focus:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6),0_0_15px_rgba(0,204,255,0.2)] transition-all"
                         />
                       </div>
+
+                      {/* Phone Number */}
+                      <div className="sm:col-span-2">
+                        <label className="block text-xs font-semibold uppercase text-gray-400 mb-2">Phone / WhatsApp *</label>
+                        <input
+                          type="tel"
+                          required
+                          value={formData.phone}
+                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                          placeholder="e.g. +94 77 123 4567"
+                          className="w-full px-4 py-3 rounded-2xl bg-black/40 border border-white/10 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-[#00ccff] shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] focus:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6),0_0_15px_rgba(0,204,255,0.2)] transition-all"
+                        />
+                      </div>
                     </div>
 
-                    {/* Inset Liquid Glass Textarea */}
+                    {/* Project Scope & Details */}
                     <div>
                       <label className="block text-xs font-semibold uppercase text-gray-400 mb-2">Project Scope & Details</label>
                       <textarea
