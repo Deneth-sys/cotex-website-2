@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import Magnet from '../reactbits/Magnet';
 import { 
   ArrowUp, 
   Mail, 
   ShieldCheck, 
-  Globe 
+  Globe,
+  Sparkles,
+  ExternalLink
 } from 'lucide-react';
 
 const navLinks = [
@@ -27,7 +30,7 @@ const serviceLinks = [
 const socialLinks = [
   {
     name: "Email",
-    href: "mailto:cotexfounder@gmail.com",
+    href: "https://mail.google.com/mail/?view=cm&fs=1&to=cotexfounder@gmail.com",
     icon: <Mail size={16} />,
   },
   {
@@ -71,7 +74,6 @@ const socialLinks = [
 export default function Footer() {
   const [activeFooter, setActiveFooter] = useState('Home');
 
-  // Track active section on scroll for footer links
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + window.innerHeight * 0.35;
@@ -90,10 +92,8 @@ export default function Footer() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Snappy 500ms smooth scroll handler for footer links & back-to-top button
   const handleSmoothScroll = (e, href) => {
     e.preventDefault();
-    
     const targetId = href.substring(1);
     const targetElement = document.getElementById(targetId);
 
@@ -106,13 +106,11 @@ export default function Footer() {
 
     const distance = targetPosition - startPosition;
     const startTime = performance.now();
-    const duration = 500; // Fast & visible 500ms glide
+    const duration = 500;
 
     const animation = (currentTime) => {
       const elapsedTime = currentTime - startTime;
       const progress = Math.min(elapsedTime / duration, 1);
-
-      // Ease-Out Cubic curve
       const ease = 1 - Math.pow(1 - progress, 3);
 
       window.scrollTo(0, startPosition + distance * ease);
@@ -126,13 +124,80 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative border-t border-white/10 bg-[#030306] pt-16 pb-12 overflow-hidden text-gray-400">
-      {/* Background Ambient Glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[900px] h-[200px] bg-[#00ccff]/5 rounded-full blur-[140px] pointer-events-none" />
+    <footer className="relative border-t border-white/10 bg-[#020205] pt-20 pb-12 overflow-hidden text-gray-400">
+      
+      {/* 🌟 Floating Ambient Background Elements & Orbs */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-[#00ccff]/50 to-transparent z-10" />
+      
+      {/* Floating Glowing Orb 1 (Top Left Drift) */}
+      <motion.div
+        animate={{
+          y: [0, -25, 0],
+          x: [0, 15, 0],
+          scale: [1, 1.1, 1],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="absolute top-12 left-[10%] w-72 h-72 bg-[#00ccff]/10 rounded-full blur-[100px] pointer-events-none"
+      />
+
+      {/* Floating Glowing Orb 2 (Right Side Drift) */}
+      <motion.div
+        animate={{
+          y: [0, 30, 0],
+          x: [0, -20, 0],
+          scale: [1, 1.15, 1],
+        }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="absolute top-1/2 right-[5%] w-80 h-80 bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none"
+      />
+
+      {/* Bottom Glow Backdrop */}
+      <div className="absolute bottom-[-100px] left-1/2 -translate-x-1/2 w-[1000px] h-[300px] bg-gradient-to-t from-[#00ccff]/10 via-[#00ccff]/5 to-transparent rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         
-        {/* Main Footer Links */}
+        {/* Top Callout Card with subtle floating hover effect */}
+        <motion.div 
+          whileHover={{ y: -4 }}
+          transition={{ duration: 0.3 }}
+          className="mb-16 p-8 sm:p-10 rounded-3xl bg-gradient-to-br from-white/[0.04] to-white/[0.01] border border-white/10 backdrop-blur-xl relative overflow-hidden flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 group hover:border-[#00ccff]/40 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-500"
+        >
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#00ccff]/5 rounded-full blur-[90px] pointer-events-none group-hover:bg-[#00ccff]/15 transition-all" />
+          
+          <div className="space-y-3 max-w-xl relative z-10">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00ccff]/10 border border-[#00ccff]/30 text-[#00ccff] text-xs font-semibold tracking-wide uppercase shadow-[0_0_15px_rgba(0,204,255,0.2)]">
+              <Sparkles size={13} />
+              Ready to Accelerate Your Digital Presence?
+            </div>
+            <h3 className="text-2xl sm:text-3xl font-bold font-heading text-white tracking-tight">
+              Let's engineer your next digital milestone together.
+            </h3>
+            <p className="text-sm text-gray-400 leading-relaxed">
+              We turn complex technical requirements into high-converting web architecture and elite digital products.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-4 relative z-10 w-full sm:w-auto">
+            <a
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=cotexfounder@gmail.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-full bg-[#00ccff] text-black font-semibold text-xs tracking-wider uppercase hover:bg-white transition-all shadow-[0_0_30px_rgba(0,204,255,0.3)] hover:shadow-[0_0_40px_rgba(255,255,255,0.4)] cursor-pointer"
+            >
+              Start a Conversation <ExternalLink size={14} />
+            </a>
+          </div>
+        </motion.div>
+
+        {/* Main Footer Links Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 pb-16 border-b border-white/10">
           
           {/* Brand & Socials */}
@@ -140,7 +205,7 @@ export default function Footer() {
             <a 
               href="#hero" 
               onClick={(e) => handleSmoothScroll(e, '#hero')}
-              className="font-logo logo-text-glow text-xl sm:text-2xl font-black uppercase tracking-[0.18em] pl-[0.18em] inline-block hover:opacity-90 transition-opacity"
+              className="font-logo logo-text-glow text-2xl sm:text-3xl font-black uppercase tracking-[0.2em] pl-[0.2em] inline-block hover:opacity-90 transition-opacity text-white"
             >
               COTEX
             </a>
@@ -160,10 +225,10 @@ export default function Footer() {
                 <Magnet key={social.name} magnetism={0.2}>
                   <a
                     href={social.href}
-                    target={social.href.startsWith('mailto:') ? '_self' : '_blank'}
+                    target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.name}
-                    className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-[#00ccff] hover:border-[#00ccff]/50 transition-all"
+                    className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-[#00ccff] hover:border-[#00ccff]/50 hover:bg-[#00ccff]/10 transition-all"
                   >
                     {social.icon}
                   </a>
@@ -173,8 +238,8 @@ export default function Footer() {
           </div>
 
           {/* Navigation Links */}
-          <div className="lg:col-span-3">
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-white mb-5 font-heading">
+          <div className="lg:col-span-3 lg:pl-6">
+            <h4 className="text-xs font-semibold uppercase tracking-widest text-white mb-5 font-heading">
               Navigation
             </h4>
             <ul className="space-y-3 text-xs">
@@ -185,7 +250,7 @@ export default function Footer() {
                     <a 
                       href={link.href} 
                       onClick={(e) => handleSmoothScroll(e, link.href)}
-                      className={`transition-colors ${isActive ? 'text-[#00ccff]' : 'text-gray-400 hover:text-[#00ccff]'}`}
+                      className={`transition-colors inline-block py-0.5 ${isActive ? 'text-[#00ccff] font-semibold translate-x-1' : 'text-gray-400 hover:text-[#00ccff] hover:translate-x-1'} transition-transform duration-200`}
                     >
                       {link.name}
                     </a>
@@ -197,7 +262,7 @@ export default function Footer() {
 
           {/* Capabilities */}
           <div className="lg:col-span-5">
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-white mb-5 font-heading">
+            <h4 className="text-xs font-semibold uppercase tracking-widest text-white mb-5 font-heading">
               Capabilities
             </h4>
             <ul className="space-y-3 text-xs">
@@ -206,7 +271,7 @@ export default function Footer() {
                   <a 
                     href={service.href} 
                     onClick={(e) => handleSmoothScroll(e, service.href)}
-                    className="text-gray-400 hover:text-[#00ccff] transition-colors"
+                    className="text-gray-400 hover:text-[#00ccff] transition-colors inline-block py-0.5"
                   >
                     {service.name}
                   </a>
@@ -217,25 +282,37 @@ export default function Footer() {
             <div className="mt-6 p-4 rounded-2xl bg-white/[0.02] border border-white/5 flex items-center gap-3">
               <ShieldCheck size={20} className="text-[#00ccff] shrink-0" />
               <p className="text-[11px] text-gray-400 leading-snug">
-                Strict NDA compliance & encrypted data protection protocols.
+                Strict NDA compliance & enterprise-grade encrypted data protection protocols.
               </p>
             </div>
           </div>
 
         </div>
 
+        {/* Massive Typographic Watermark Banner with slow floating hover feel */}
+        <div className="py-12 overflow-hidden text-center select-none pointer-events-none opacity-20 relative">
+          <motion.div
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <h2 className="text-[14vw] sm:text-[12vw] font-black font-logo tracking-widest text-transparent bg-clip-text bg-gradient-to-b from-white via-white/40 to-transparent leading-none">
+              COTEX
+            </h2>
+          </motion.div>
+        </div>
+
         {/* Bottom Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex flex-wrap items-center gap-4 text-xs text-gray-500 font-medium">
+        <div className="pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+          <div className="flex flex-wrap items-center gap-4 text-gray-500 font-medium">
             <span>© {new Date().getFullYear()} Cotex Digital Solutions. All rights reserved.</span>
             <span className="hidden sm:inline">•</span>
-            <span className="flex items-center gap-1"><Globe size={12} /> Global Operations</span>
+            <span className="flex items-center gap-1 text-gray-400"><Globe size={12} className="text-[#00ccff]" /> Global Operations</span>
           </div>
 
           <Magnet magnetism={0.3}>
             <button
               onClick={(e) => handleSmoothScroll(e, '#hero')}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-gray-300 hover:text-white hover:border-[#00ccff]/50 transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 px-4.5 py-2.5 rounded-full bg-white/5 border border-white/10 font-medium text-gray-300 hover:text-white hover:border-[#00ccff]/50 hover:bg-[#00ccff]/10 transition-all cursor-pointer"
             >
               Back to top <ArrowUp size={14} className="text-[#00ccff]" />
             </button>

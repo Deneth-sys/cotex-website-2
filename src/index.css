@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Michroma&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Space+Grotesk:wght@500;700&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=general-sans@400,500,600,700&display=swap');
 @import "tailwindcss";
 
 html {
@@ -20,13 +21,23 @@ section {
 body {
   background-color: #050508;
   color: #f0f0f5;
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-family: 'General Sans', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, .font-heading {
+/* Hero and Specific Headings retain Space Grotesk */
+.font-heading, #hero h1, #hero h2, #hero h3 {
   font-family: 'Space Grotesk', sans-serif;
   letter-spacing: -0.02em;
+}
+
+/* Section Headings (About, Services, Process, Reviews, Contact) use Clash Display */
+section:not(#hero) h1, 
+section:not(#hero) h2, 
+section:not(#hero) h3, 
+section:not(#hero) h4 {
+  font-family: 'Clash Display', sans-serif;
+  letter-spacing: -0.01em;
 }
 
 /* Custom Logo Font Utility matching COTEX emblem */

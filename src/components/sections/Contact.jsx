@@ -1,8 +1,9 @@
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import StarBorder from '../reactbits/StarBorder';
 import ClickSpark from '../reactbits/ClickSpark';
 import Magnet from '../reactbits/Magnet';
-import { Send, Mail, Clock, CheckCircle, ShieldCheck, Loader2, Phone } from 'lucide-react';
+import { Send, Mail, Clock, CheckCircle, ShieldCheck, Loader2, Phone, AlertCircle } from 'lucide-react';
 
 const serviceOptions = [
   "Web Development",
@@ -14,7 +15,8 @@ const serviceOptions = [
 
 export default function Contact() {
   const [selectedService, setSelectedService] = useState("Web Development");
-  const [status, setStatus] = useState('idle'); // 'idle' | 'loading' | 'success'
+  const [status, setStatus] = useState('idle'); // 'idle' | 'loading' | 'success' | 'error'
+  const [errorMessage, setErrorMessage] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -27,6 +29,7 @@ export default function Contact() {
     if (!formData.name || !formData.email || !formData.phone) return;
 
     setStatus('loading');
+    setErrorMessage('');
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
@@ -52,18 +55,19 @@ export default function Contact() {
         setStatus('success');
       } else {
         console.error("Form submission failed:", result);
-        setStatus('idle');
-        alert("Something went wrong. Please try again.");
+        setStatus('error');
+        setErrorMessage(result.message || "Something went wrong. Please try again.");
       }
     } catch (error) {
       console.error("Network error:", error);
-      setStatus('idle');
-      alert("Network error. Please check your connection and try again.");
+      setStatus('error');
+      setErrorMessage("Network error. Please check your connection and try again.");
     }
   };
 
   const handleReset = () => {
     setStatus('idle');
+    setErrorMessage('');
     setFormData({
       name: '',
       email: '',
@@ -164,126 +168,156 @@ export default function Contact() {
             <StarBorder color="#00ccff" speed="5s" className="w-full h-full">
               <div className="liquid-glass rounded-[2rem] p-8 sm:p-10 h-full flex flex-col justify-center relative overflow-hidden">
                 
-                {status === 'success' ? (
-                  <div className="py-12 text-center space-y-4">
-                    <div className="liquid-glass-icon w-16 h-16 rounded-full flex items-center justify-center text-[#00ccff] mx-auto border-[#00ccff]/50">
-                      <CheckCircle size={32} />
-                    </div>
-                    <h3 className="text-2xl font-bold text-white font-heading">Inquiry Received</h3>
-                    <p className="text-gray-400 text-sm max-w-sm mx-auto">
-                      Thank you for contacting Cotex regarding <strong>{selectedService}</strong>. A project manager will review your submission and respond shortly.
-                    </p>
-                    <button
-                      onClick={handleReset}
-                      className="liquid-glass px-6 py-2.5 rounded-full text-xs text-gray-300 hover:text-white hover:border-[#00ccff] transition-all cursor-pointer"
+                <AnimatePresence mode="wait">
+                  {status === 'success' ? (
+                    <motion.div
+                      key="success"
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.3 }}
+                      className="py-12 text-center space-y-4"
                     >
-                      Submit Another Inquiry
-                    </button>
-                  </div>
-                ) : (
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    {/* Category Selector Pills */}
-                    <div>
-                      <label className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-3">
-                        Select Category:
-                      </label>
-                      <div className="flex flex-wrap gap-2">
-                        {serviceOptions.map((opt) => {
-                          const isSelected = selectedService === opt;
-                          return (
+                      <div className="liquid-glass-icon w-16 h-16 rounded-full flex items-center justify-center text-[#00ccff] mx-auto border-[#00ccff]/50">
+                        <CheckCircle size={32} />
+                      </div>
+                      <h3 className="text-2xl font-bold text-white font-heading">Inquiry Received</h3>
+                      <p className="text-gray-400 text-sm max-w-sm mx-auto">
+                        Thank you for contacting Cotex regarding <strong>{selectedService}</strong>. A project manager will review your submission and respond shortly.
+                      </p>
+                      <button
+                        onClick={handleReset}
+                        className="liquid-glass px-6 py-2.5 rounded-full text-xs text-gray-300 hover:text-white hover:border-[#00ccff] transition-all cursor-pointer"
+                      >
+                        Submit Another Inquiry
+                      </button>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="form"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <form onSubmit={handleSubmit} className="space-y-6">
+                        
+                        {/* Inline Error Banner */}
+                        {status === 'error' && (
+                          <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/30 flex items-center gap-3 text-red-400 text-xs">
+                            <AlertCircle size={18} className="shrink-0" />
+                            <span>{errorMessage}</span>
+                          </div>
+                        )}
+
+                        {/* Category Selector Pills */}
+                        <div>
+                          <label className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-3">
+                            Select Category:
+                          </label>
+                          <div className="flex flex-wrap gap-2">
+                            {serviceOptions.map((opt) => {
+                              const isSelected = selectedService === opt;
+                              return (
+                                <button
+                                  key={opt}
+                                  type="button"
+                                  onClick={() => setSelectedService(opt)}
+                                  className={`px-4 py-2 rounded-full text-xs font-medium transition-all cursor-pointer ${
+                                    isSelected
+                                      ? 'bg-[#00ccff] text-[#050508] font-bold shadow-[0_0_20px_rgba(0,204,255,0.5)]'
+                                      : 'liquid-glass text-gray-400 hover:text-white hover:border-white/30'
+                                  }`}
+                                >
+                                  {opt}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+
+                        {/* Form Input Fields Grid */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          {/* Full Name */}
+                          <div>
+                            <label htmlFor="contact-name" className="block text-xs font-semibold uppercase text-gray-400 mb-2">Full Name *</label>
+                            <input
+                              id="contact-name"
+                              type="text"
+                              required
+                              value={formData.name}
+                              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                              placeholder="e.g. Alex Mercer"
+                              className="w-full px-4 py-3 rounded-2xl bg-black/40 border border-white/10 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-[#00ccff] shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] focus:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6),0_0_15px_rgba(0,204,255,0.2)] transition-all"
+                            />
+                          </div>
+
+                          {/* Email Address */}
+                          <div>
+                            <label htmlFor="contact-email" className="block text-xs font-semibold uppercase text-gray-400 mb-2">Email Address *</label>
+                            <input
+                              id="contact-email"
+                              type="email"
+                              required
+                              value={formData.email}
+                              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                              placeholder="e.g. alex@company.com"
+                              className="w-full px-4 py-3 rounded-2xl bg-black/40 border border-white/10 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-[#00ccff] shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] focus:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6),0_0_15px_rgba(0,204,255,0.2)] transition-all"
+                            />
+                          </div>
+
+                          {/* Phone Number */}
+                          <div className="sm:col-span-2">
+                            <label htmlFor="contact-phone" className="block text-xs font-semibold uppercase text-gray-400 mb-2">Phone / WhatsApp *</label>
+                            <input
+                              id="contact-phone"
+                              type="tel"
+                              required
+                              value={formData.phone}
+                              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                              placeholder="e.g. +94 77 010 6371"
+                              className="w-full px-4 py-3 rounded-2xl bg-black/40 border border-white/10 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-[#00ccff] shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] focus:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6),0_0_15px_rgba(0,204,255,0.2)] transition-all"
+                            />
+                          </div>
+                        </div>
+
+                        {/* Project Scope & Details */}
+                        <div>
+                          <label htmlFor="contact-message" className="block text-xs font-semibold uppercase text-gray-400 mb-2">Project Scope & Details</label>
+                          <textarea
+                            id="contact-message"
+                            rows="4"
+                            value={formData.message}
+                            onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                            placeholder="Provide a summary of your requirements, key deliverables, and target timeline..."
+                            className="w-full px-4 py-3 rounded-2xl bg-black/40 border border-white/10 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-[#00ccff] shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] focus:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6),0_0_15px_rgba(0,204,255,0.2)] transition-all resize-none"
+                          />
+                        </div>
+
+                        {/* Submit Button */}
+                        <div className="pt-2">
+                          <Magnet magnetism={0.3}>
                             <button
-                              key={opt}
-                              type="button"
-                              onClick={() => setSelectedService(opt)}
-                              className={`px-4 py-2 rounded-full text-xs font-medium transition-all cursor-pointer ${
-                                isSelected
-                                  ? 'bg-[#00ccff] text-[#050508] font-bold shadow-[0_0_20px_rgba(0,204,255,0.5)]'
-                                  : 'liquid-glass text-gray-400 hover:text-white hover:border-white/30'
-                              }`}
+                              type="submit"
+                              disabled={status === 'loading'}
+                              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-[#00ccff] text-[#050508] font-bold text-sm hover:shadow-[0_0_30px_rgba(0,204,255,0.6)] transition-all cursor-pointer disabled:opacity-50"
                             >
-                              {opt}
+                              {status === 'loading' ? (
+                                <>
+                                  <Loader2 size={16} className="animate-spin" /> Encrypting Payload...
+                                </>
+                              ) : (
+                                <>
+                                  Submit Inquiry <Send size={16} />
+                                </>
+                              )}
                             </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    {/* Form Input Fields Grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {/* Full Name */}
-                      <div>
-                        <label className="block text-xs font-semibold uppercase text-gray-400 mb-2">Full Name *</label>
-                        <input
-                          type="text"
-                          required
-                          value={formData.name}
-                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          placeholder="e.g. Alex Mercer"
-                          className="w-full px-4 py-3 rounded-2xl bg-black/40 border border-white/10 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-[#00ccff] shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] focus:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6),0_0_15px_rgba(0,204,255,0.2)] transition-all"
-                        />
-                      </div>
-
-                      {/* Email Address */}
-                      <div>
-                        <label className="block text-xs font-semibold uppercase text-gray-400 mb-2">Email Address *</label>
-                        <input
-                          type="email"
-                          required
-                          value={formData.email}
-                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          placeholder="e.g. alex@company.com"
-                          className="w-full px-4 py-3 rounded-2xl bg-black/40 border border-white/10 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-[#00ccff] shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] focus:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6),0_0_15px_rgba(0,204,255,0.2)] transition-all"
-                        />
-                      </div>
-
-                      {/* Phone Number */}
-                      <div className="sm:col-span-2">
-                        <label className="block text-xs font-semibold uppercase text-gray-400 mb-2">Phone / WhatsApp *</label>
-                        <input
-                          type="tel"
-                          required
-                          value={formData.phone}
-                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          placeholder="e.g. +94 77 010 6371"
-                          className="w-full px-4 py-3 rounded-2xl bg-black/40 border border-white/10 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-[#00ccff] shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] focus:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6),0_0_15px_rgba(0,204,255,0.2)] transition-all"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Project Scope & Details */}
-                    <div>
-                      <label className="block text-xs font-semibold uppercase text-gray-400 mb-2">Project Scope & Details</label>
-                      <textarea
-                        rows="4"
-                        value={formData.message}
-                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                        placeholder="Provide a summary of your requirements, key deliverables, and target timeline..."
-                        className="w-full px-4 py-3 rounded-2xl bg-black/40 border border-white/10 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-[#00ccff] shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] focus:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6),0_0_15px_rgba(0,204,255,0.2)] transition-all resize-none"
-                      />
-                    </div>
-
-                    {/* Submit Button */}
-                    <div className="pt-2">
-                      <Magnet magnetism={0.3}>
-                        <button
-                          type="submit"
-                          disabled={status === 'loading'}
-                          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-[#00ccff] text-[#050508] font-bold text-sm hover:shadow-[0_0_30px_rgba(0,204,255,0.6)] transition-all cursor-pointer disabled:opacity-50"
-                        >
-                          {status === 'loading' ? (
-                            <>
-                              <Loader2 size={16} className="animate-spin" /> Transmitting...
-                            </>
-                          ) : (
-                            <>
-                              Submit Inquiry <Send size={16} />
-                            </>
-                          )}
-                        </button>
-                      </Magnet>
-                    </div>
-                  </form>
-                )}
+                          </Magnet>
+                        </div>
+                      </form>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </StarBorder>
           </div>
