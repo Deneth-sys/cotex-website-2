@@ -102,7 +102,12 @@ export default function Contact() {
                 <div>
                   <h4 className="text-white font-bold text-sm font-heading">Direct Correspondence</h4>
                   <p className="text-xs text-gray-400 mt-0.5">Official communication channel</p>
-                  <a href="mailto:cotexfounder@gmail.com" className="text-[#00ccff] text-xs font-semibold hover:underline mt-2 inline-block">
+                  <a 
+                    href="https://mail.google.com/mail/?view=cm&fs=1&to=cotexfounder@gmail.com" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="text-[#00ccff] text-xs font-semibold hover:underline mt-2 inline-block"
+                  >
                     cotexfounder@gmail.com
                   </a>
                 </div>
